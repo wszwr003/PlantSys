@@ -1,5 +1,7 @@
 {
   "name": "PlantSys",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

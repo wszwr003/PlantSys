@@ -1,9 +1,58 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>main-node-list</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button autoHide="false"></ion-menu-button>植物工厂控制系统
+		</ion-buttons>
+		<ion-buttons slot="secondary">
+			<ion-button (click)="presentPopover($event)">
+				<ion-icon slot="icon-only" name="add" ></ion-icon>添加
+			</ion-button>
+		</ion-buttons>
+		<ion-title style=text-align:center></ion-title>
+	</ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+	<ion-list *ngIf="!iscard" >
+		<ion-item *ngFor="let card of cards">
+			<ion-thumbnail slot="start">
+				<img src="./assets/{{card.kind}}.png">
+			</ion-thumbnail>
+			<ion-label>
+				<h2>{{card.name}}</h2>
+				<p>{{card.addr}}</p>
+			</ion-label>
+			<ion-button fill="outline" slot="end">View</ion-button>
+		</ion-item>
+	</ion-list>	  
+	<ion-grid  *ngIf="iscard" >
+		<ion-row>
+			<ion-col *ngFor="let card of cards" size-xs="6" size-sm="4" size-md="3" size-lg="2">
+				<ion-card color="light" [routerDirection]="'root'" [routerLink]="'/'+card.kind">
+				<ion-card-header>
+					<ion-chip color="success" style="position : absolute;top : 0rem;right : 0rem;">
+						<ion-label>{{card.loc}}</ion-label>
+					</ion-chip>
+					<ion-card-subtitle>{{card.name}}</ion-card-subtitle>
+					<ion-card-subtitle style="position: relative; top: -0.5rem;">{{card.addr}}</ion-card-subtitle>
+				</ion-card-header>
+				
+				<ion-card-content>
+						<p *ngIf="card.kind=='collect'" outline  style="color:green; position : absolute;top : -0.7rem;left : 5.0rem;">
+								{{'22  ℃  |  86 %'}}
+						</p>
+						<p *ngIf="card.kind=='collect'" outline  style="color:green; position : absolute;top : 0.3rem;left : 5.0rem;">
+								{{'455ppm|788lx'}}
+						</p>
+					<img src="./assets/{{card.kind}}.png" style="position: relative; left: -0.9rem; top: -0.5rem; width: 2rem; height: 2rem;">
+					
+				</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+	<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+        <ion-fab-button color="light" (click)="changeview()">
+          <ion-icon [name]="iscard?'git-merge':'apps'" ></ion-icon>
+        </ion-fab-button>
+	</ion-fab>
 </ion-content>

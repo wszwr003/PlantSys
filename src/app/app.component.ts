@@ -26,7 +26,7 @@ export class AppComponent {
       icon: 'list'
     },
     {
-      title: '关于植物环境控制系统',
+      title: '关于植物工厂控制系统',
       url: '',
       icon: 'list'
     },

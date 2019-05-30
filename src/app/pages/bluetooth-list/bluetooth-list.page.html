@@ -11,6 +11,13 @@
 </ion-header>
 <ion-content>
   <ion-list>
+    <ion-item *ngIf="devices!=''" detail>
+      <ion-label color="success" text-wrap>
+        <h2>植物工厂接入节点1</h2>
+        <p>26:E2:46:F7:7D:2A</p>
+        <p>RSSI: -45</p>
+      </ion-label>
+    </ion-item>
     <ion-item *ngFor="let device of devices" (click)="deviceSelected(device)" routerLink="/ble-detail" detail>
       <ion-label text-wrap>
         <h2>{{ device.name || 'Unnamed Bluetooth Device' }}</h2>

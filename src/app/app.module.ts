@@ -6,12 +6,14 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BLE } from '@ionic-native/ble/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { MainTabsPageModule } from './pages/main-tabs/main-tabs.module';
-import { MainNodeListPageModule } from './pages/main-node-list/main-node-list.module';
 
 
 @NgModule({
@@ -22,10 +24,10 @@ import { MainNodeListPageModule } from './pages/main-node-list/main-node-list.mo
     IonicModule.forRoot(), 
     AppRoutingModule,
     MainTabsPageModule,
-    MainNodeListPageModule
   ],
   providers: [
     BLE,
+    ScreenOrientation,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

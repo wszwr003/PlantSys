@@ -1,0 +1,13 @@
+ion-card {  //TODO:1.卡片边距优化2.卡片圆角优化
+    margin: 0;
+    padding: 0;
+  }
+  
+  ion-content{
+    --background: #fff url('../../../assets/cover.jpg') no-repeat center center / cover;
+  }
+  
+  ion-card-header {  
+    margin: 3px;
+    padding: 1px;
+  }

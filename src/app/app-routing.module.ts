@@ -19,10 +19,12 @@ const routes: Routes = [
       {
         path: 'bluetooth-list',
         loadChildren: './pages/bluetooth-list/bluetooth-list.module#BluetoothListPageModule'
-
+        
       }
     ]
-  }
+  },
+  { path: 'air-contrl', loadChildren: './pages/air-contrl/air-contrl.module#AirContrlPageModule' },
+  { path: 'air-collect', loadChildren: './pages/air-collect/air-collect.module#AirCollectPageModule' },
 ];
 
 @NgModule({

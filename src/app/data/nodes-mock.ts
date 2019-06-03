@@ -7,4 +7,7 @@ export let NODES = [
     {name:"环境采集节点",addr:"ID:3003",kind:"air-collect",loc:"实验室2",loc2:"2",x:1,y:1},
     {name:"环境控制节点",addr:"ID:2003",kind:"air-contrl",loc:"实验室3",loc2:"3",x:1,y:1},
     {name:"环境采集节点",addr:"ID:3004",kind:"air-collect",loc:"实验室3",loc2:"3",x:1,y:1},
+    {name:"环境采集节点",addr:"ID:3005",kind:"air-collect",loc:"实验室3",loc2:"3",x:1,y:1},
+    {name:"环境采集节点",addr:"ID:3006",kind:"air-collect",loc:"实验室3",loc2:"3",x:1,y:1},
   ]
+  export let LOCATIONS = ["实验室1","实验室2","实验室3"]

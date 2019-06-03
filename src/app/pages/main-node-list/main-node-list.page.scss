@@ -1,12 +1,24 @@
-ion-card {  //TODO:1.卡片边距优化2.卡片圆角优化
+  ion-card {  //TODO:1.卡片边距优化2.卡片圆角优化
     margin: 0;
     padding: 0;
   }
-  
-  ion-content{
-    --background: #fff url('../../../assets/cover.jpg') no-repeat center center / cover;
+  a {
+    text-decoration : underline;
   }
-  
+  // ion-content {    //ionic background set
+  //   --background: #fff url('../../../assets/cover.jpg') no-repeat center center / cover;
+  // }
+  .tab-pane {   //bootstrap background set
+    background:url('../../../assets/cover.jpg') no-repeat fixed center center / cover;
+    background-repeat:no-repeat; 
+    background-attachment:fixed;
+    //background-size:contain;
+  }
+  .tab-pane  {  
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
   ion-card-header {  
     margin: 3px;
     padding: 1px;

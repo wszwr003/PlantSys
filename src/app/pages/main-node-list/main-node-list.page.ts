@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { AddNodePopoverComponent } from './add-node-popover.component';
-import { NODES } from '../../data/nodes-mock';
+import { NODES , LOCATIONS } from '../../data/nodes-mock';
 @Component({
   selector: 'app-main-node-list',
   templateUrl: './main-node-list.page.html',
@@ -9,6 +9,7 @@ import { NODES } from '../../data/nodes-mock';
 })
 export class MainNodeListPage {
   iscard:boolean = true;
+  selectedLoc:string;
   public url_contrl:string = '/contrl';
   public url_collect:string = '/collect';
   public url_water:string = '/water';
@@ -17,7 +18,9 @@ export class MainNodeListPage {
   num:number = 4;
   node:any;
   public cards = NODES;
+  public locs = LOCATIONS;
   constructor(public popoverController: PopoverController) { 
+    this.selectedLoc = "所有节点";
   }
 
   async presentPopover(ev: any) {
@@ -37,5 +40,9 @@ export class MainNodeListPage {
   }
   removenode(){
     this.cards.pop();
+  }
+  selectLoc(event:any){
+    console.log(event);
+    this.selectedLoc = event.target.text;
   }
 }

@@ -10,7 +10,6 @@ export class BluetoothListPage implements OnInit {
 
   devices: any[] = [];
   statusMessage: string;
-
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     private ble: BLE,

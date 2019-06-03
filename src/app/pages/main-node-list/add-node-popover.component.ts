@@ -12,11 +12,11 @@ import { PopoverController } from '@ionic/angular';
             <ion-label>营养液</ion-label>
         </ion-segment-button>
         <ion-segment-button layout="icon-bottom" value="contrl">
-        <img src="./assets/contrl.png" style="width: 3rem">
+        <img src="./assets/air-contrl.png" style="width: 3rem">
             <ion-label>环境控制</ion-label>
         </ion-segment-button>
         <ion-segment-button layout="icon-bottom" value="collect">
-        <img src="./assets/collect.png" style="width: 3rem">
+        <img src="./assets/air-collect.png" style="width: 3rem">
             <ion-label>环境采集</ion-label>
         </ion-segment-button>
         </ion-segment>  

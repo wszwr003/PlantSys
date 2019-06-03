@@ -7,7 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { BLE } from '@ionic-native/ble/ngx';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -24,6 +24,7 @@ import { MainTabsPageModule } from './pages/main-tabs/main-tabs.module';
     IonicModule.forRoot(), 
     AppRoutingModule,
     MainTabsPageModule,
+    NgbModule.forRoot(),  //TODO:what forroot mean
   ],
   providers: [
     BLE,

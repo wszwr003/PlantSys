@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ passedName || 'Unnamed Device' }} {{passedId}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+  <ion-card>
+    <ion-button (click)="sendData()">发送测试帧</ion-button>
+    <h1>{{ buttonState  }}</h1>
+    <h5>{{ state  }}</h5>
+  </ion-card>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p>{{ statusMessage }}</p>
+  </ion-toolbar>
+</ion-footer>

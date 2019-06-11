@@ -10,7 +10,7 @@ export class BluetoothListPage implements OnInit {
 
   devices: any[] = [];
   statusMessage: string;
-  constructor(public navCtrl: NavController,
+  constructor(private navCtrl: NavController,
     public toastCtrl: ToastController,
     private ble: BLE,
     private ngZone: NgZone) {
@@ -60,7 +60,7 @@ export class BluetoothListPage implements OnInit {
   }
 
   deviceSelected(device){
-
+    this.navCtrl.navigateForward(`ble-detail/${device.id}/${device.name}`);
   }
 
   ngOnInit() { }

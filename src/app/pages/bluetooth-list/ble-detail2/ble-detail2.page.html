@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ passedName || 'Unnamed Device' }} {{passedId}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding">
+    <!-- <ion-button (click)="ble_connect()">连接</ion-button>
+    <ion-button (click)="send_read_addr()">读地址</ion-button>
+    <ion-button (click)="send_write_time()">写时间</ion-button>
+    <ion-button (click)="send_get_time()">读时间</ion-button>
+    <ion-button (click)="add_device()">插入设备</ion-button> 
+    <ion-button (click)="delete_device()">删除设备</ion-button><br />
+    <ion-button (click)="send_read_devices_number()">读取节点数</ion-button>
+    <ion-button (click)="send_read_one_device_addr()">读取一个节点的地址</ion-button><br />
+    <ion-button (click)="send_read_one_device_realy()">读取一个节点继电器状态</ion-button>
+    <ion-button (click)="send_write_one_device_realy()">写入一个节点继电器状态</ion-button><br />
+    <ion-button (click)="send_read_one_device_auto()">读取一个节点的自动控制</ion-button>
+    <ion-button (click)="send_write_one_device_auto()">写入一个节点的自动控制</ion-button>
+    <ion-button (click)="send_read_one_device_mode()">读取一个节点的控制模式</ion-button>
+    <ion-button (click)="send_write_one_device_mode()">写入一个节点的控制模式</ion-button>
+    <ion-button (click)="send_read_one_device_live()">读取一个节点的实时数据</ion-button>
+    <ion-button (click)="send_read_one_device_history()">写入一个节点的历史数据</ion-button> -->
+    <h1>{{ sendarray  }}</h1>
+    <h1>{{ receivearray  }}</h1>
+    <h1>{{ nowtime  }}</h1>
+
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-button (click)="ble_connect()">连接</ion-button>
+        <ion-button (click)="send_read_addr()">读地址</ion-button>
+        <ion-button (click)="send_write_time()">写时间</ion-button>
+        <ion-button (click)="send_get_time()">读时间</ion-button>
+
+        <ion-item>
+          <ion-label position="stacked">插入设备</ion-label>
+          <ion-input #add_id type="number" placeholder="设备id"></ion-input>
+          <ion-input #add_loc placeholder="设备位置"></ion-input>
+          <ion-button (click)="add_device(add_id.value,add_loc.value)">插入设备</ion-button> 
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">删除设备</ion-label>
+            <ion-input #delete_id type="number" placeholder="设备id"></ion-input>
+            <ion-button (click)="delete_device(delete_id.value)">删除设备</ion-button>
+          </ion-item>
+        <ion-item>
+            <ion-label position="stacked">读取一个节点的地址</ion-label>
+            <ion-input #device_number type="number" placeholder="设备节点数编号"></ion-input>
+            <ion-button (click)="send_read_devices_number()">读取节点数</ion-button>
+            <ion-button (click)="send_read_one_device_addr(device_number.value)">读取一个节点的地址</ion-button><br />
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">控制节点</ion-label>
+            <ion-input #ctrl_id type="number" placeholder="节点地址"></ion-input>
+            <ion-input #realys type="number" placeholder="继电器编号"></ion-input>
+            <ion-input #bind type="number" placeholder="绑定的节点"></ion-input>
+            <ion-input #auto type="number" placeholder="控制模式(00手动/01自动)"></ion-input>
+            <ion-button (click)="send_read_one_device_realy(ctrl_id.value)">读取一个节点继电器状态</ion-button>
+            <ion-button (click)="send_write_one_device_realy(ctrl_id.value,realys.value)">写入一个节点继电器状态</ion-button>
+            <ion-button (click)="send_read_one_device_mode(ctrl_id.value)">读取一个节点的控制模式</ion-button>
+            <ion-button (click)="send_write_one_device_mode(ctrl_id.value,auto.value)">写入一个节点的控制模式</ion-button>
+            
+            <ion-button (click)="send_write_one_device_auto(ctrl_id.value,bind.value,realys.value)">写入一个节点的自动控制</ion-button>
+            <ion-button (click)="send_read_one_device_auto(ctrl_id.value,realys.value)">读取一个节点的自动控制</ion-button>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">采集节点</ion-label> 
+            <ion-input #coll_id type="number" placeholder="节点地址"></ion-input>
+            <ion-input #start type="text" placeholder="起始时间(2019/06/27 10:00)"></ion-input>
+            <ion-input #end type="text" placeholder="结束时间(2019/06/27 16:00)"></ion-input>
+            <ion-button (click)="send_read_one_device_history(coll_id.value,start.value,end.value)">读取一个节点的历史数据</ion-button>
+            <ion-button (click)="send_read_one_device_live(coll_id.value)">读取一个节点的实时数据</ion-button>
+        </ion-item>
+      </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <p>{{ statusMessage }}</p>
+  </ion-toolbar>
+</ion-footer>

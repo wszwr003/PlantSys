@@ -16,12 +16,14 @@ let addr_string = '';
 export class BleDetailPage implements OnInit {
   peripheral: any = {};
   buttonState: string;
+  buttonState2: string;
   state: string;
   statecount: number = 0;
   statusMessage: string;
   passedId = null;
   passedName = null;
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private ble: BLE,
     private alertCtrl: AlertController,
     private ngZone: NgZone,
@@ -60,16 +62,62 @@ export class BleDetailPage implements OnInit {
   }
 
   sendData(data: ArrayBuffer) {
+    var typedArray = new Uint8Array(data);
+    this.ngZone.run(() => {
+      this.buttonState = this.to16string(typedArray);
+    });
     this.ble.write(this.peripheral.id, SERVICE, CHARACTERISTIC, data).then(
       () => this.setStatus('SendDataButton'),
       e => this.showAlert('Unexpected Error', 'Error to send data！')
     );
   }
 
+  to16string(typedArray){
+    let string:string = '';
+    for (let index = 0; index < typedArray.length; index++) {
+      let tmp2 = typedArray[index]%16
+      let tmp1 = ((typedArray[index]-tmp2)/16)
+      if (tmp1<10) {
+        string =string + tmp1.toString();
+      }else if(tmp1==10){
+        string =string + 'a';
+      }else if(tmp1==11){
+        string =string + 'b';
+      }else if(tmp1==12){
+        string =string + 'c';
+      }else if(tmp1==13){
+        string =string + 'd';
+      }else if(tmp1==14){
+        string =string + 'e';
+      }else if(tmp1==15){
+        string =string + 'f';
+      }
+      if (tmp2<10) {
+        string =string + tmp2.toString();
+      }else if(tmp2==10){
+        string =string + 'a';
+      }else if(tmp2==11){
+        string =string + 'b';
+      }else if(tmp2==12){
+        string =string + 'c';
+      }else if(tmp2==13){
+        string =string + 'd';
+      }else if(tmp2==14){
+        string =string + 'e';
+      }else if(tmp2==15){
+        string =string + 'f';
+      }
+      string =string + ',';
+    }
+    return string;
+  }
+
   getData(buffer: ArrayBuffer) {
-    let string = this.bytesToString(buffer)
+    //let string = this.bytesToString(buffer);
+    var typedArray = new Uint8Array(buffer);
     this.ngZone.run(() => {
-      this.buttonState = string;
+      //this.buttonState = string;
+      this.buttonState2 = this.to16string(typedArray);
     });
   }
 
@@ -118,7 +166,11 @@ export class BleDetailPage implements OnInit {
 
 
   send_read_addr() {
-    let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0XAA, 0XAA, 0X01, 0X02, 0X10, 0X01, 0X63, 0X55, 0X3C]);
+
+    let sum = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0XAA, 0XAA, 0X01, 0X02, 0X10, 0X01]);
+    var check_sum = this.add_check_sum(sum);  
+    let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0XAA, 0XAA, 0X01, 0X02, 0X10, 0X01, check_sum, 0X55, 0X3C]);
+    // this.buttonState = check_sum.toString(); 
     //let array = this.generate_frame(new Uint8Array(0x10),new Uint8Array([0XAA,0XAA]),new Uint8Array([0X01]),new Uint8Array([0X02]),new Uint8Array([0x10,0x01]),null) 
     this.sendData(array.buffer as ArrayBuffer);
   }
@@ -129,7 +181,7 @@ export class BleDetailPage implements OnInit {
     //let array = this.generate_frame(new Uint8Array(0x10),new Uint8Array([0XAA,0XAA]),new Uint8Array([0X01]),new Uint8Array([0X02]),new Uint8Array([0x10,0x01]),null) 
     this.sendData(array.buffer as ArrayBuffer);
   }
-  send_get_time() {
+  send_get_time() { 
     let sum = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X02, 0X10, 0X04]);
     var check_sum = this.add_check_sum(sum);   
     let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X02, 0X10, 0X04, check_sum, 0X55, 0X3C]);
@@ -158,7 +210,7 @@ export class BleDetailPage implements OnInit {
   }
 
   add_check_sum(row_frame:Uint8Array){
-    let sum:number;
+    let sum:number = 0;
     row_frame.forEach(element => {
       sum+=element;
     });

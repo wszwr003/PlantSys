@@ -5,6 +5,6 @@
         <domain>192.168.43.145</domain>
         <domain>192.168.1.2</domain>
         <domain>192.168.1.123</domain>
-
+        <domain>192.168.1.101</domain>
     </domain-config>
 </network-security-config>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
+import { BleService } from '../../services/ble.service';
 
 @Component({
     selector: 'app-add-node-popover',
@@ -22,7 +23,7 @@ import { PopoverController } from '@ionic/angular';
         </ion-segment>  
         <ion-input color="success" placeholder="设备ID"></ion-input>
         <ion-input color="success" placeholder="部署位置"></ion-input>
-        <ion-button expand="block" color="success">添加节点</ion-button>
+        <ion-button (click)="add($event)" expand="block" color="success">添加节点</ion-button>
         </ion-list>
         `
     ,
@@ -30,7 +31,7 @@ import { PopoverController } from '@ionic/angular';
 })
 export class AddNodePopoverComponent implements OnInit {
 
-    constructor(public popoverCtrl: PopoverController) { }
+    constructor(private bleservice:BleService,public popoverCtrl: PopoverController) { }
 
     support() {
         // this.app.getRootNavs()[0].push('/support');

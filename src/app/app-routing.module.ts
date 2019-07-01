@@ -26,7 +26,8 @@ const routes: Routes = [
   { path: 'air-contrl', loadChildren: './pages/air-contrl/air-contrl.module#AirContrlPageModule' },
   { path: 'air-collect', loadChildren: './pages/air-collect/air-collect.module#AirCollectPageModule' },
   { path: 'water', loadChildren: './pages/water/water.module#WaterPageModule' },
-  { path: 'ble-detail/:id/:name', loadChildren: './pages/bluetooth-list/ble-detail/ble-detail.module#BleDetailPageModule' },
+  { path: 'ble-detail/:id/:name',  loadChildren: './pages/bluetooth-list/ble-detail/ble-detail.module#BleDetailPageModule' },
+  { path: 'ble-detail2/:id/:name', loadChildren: './pages/bluetooth-list/ble-detail2/ble-detail2.module#BleDetail2PageModule' },
 ];
 
 @NgModule({

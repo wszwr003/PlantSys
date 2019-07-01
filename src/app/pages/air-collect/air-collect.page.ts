@@ -2,6 +2,7 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { BleService } from '../../services/ble.service';
 
 @Component({
   selector: 'app-air-collect',
@@ -125,7 +126,7 @@ export class AirCollectPage implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  constructor(private screenOrientation: ScreenOrientation) { }
+  constructor(private bleservice:BleService,private screenOrientation: ScreenOrientation) { }
 
   ngOnInit() {
     this.mockDataGet();
@@ -159,18 +160,23 @@ export class AirCollectPage implements OnInit {
 
   private mockDataGet() {
     setInterval(() => {
-      this.pushOne()
-    }, 1000);
+      this.bleservice.send_read_one_device_live(38).subscribe(
+        next => {
+          this.pushOne(next);
+        },
+        error => {},
+        () => {}
+      );
+    }, 5000);
   }
 
 
-  public pushOne() { //推送一组新数据并更新图表
+  public pushOne(next) { //推送一组新数据并更新图表
     var time =new Date().toTimeString().slice(0,8);
     this.lineChartData.forEach((x, i) => {
-      const num = this.generateNumber(i);
       const data: number[] = x.data as number[];
-      data.push(num);
-      this.now_data[i]=num.toString();
+      data.push(next[i]);
+      this.now_data[i]=next[i].toString();
       data.shift();
     });
     this.lineChartLabels.push(time);

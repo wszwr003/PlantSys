@@ -3,6 +3,7 @@ import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { BleService } from '../../services/ble.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-air-collect',
@@ -10,15 +11,16 @@ import { BleService } from '../../services/ble.service';
   styleUrls: ['./air-collect.page.scss'],
 })
 export class AirCollectPage implements OnInit {
+  passedId:string;
   public url_history:string = '/history';
   public now_data=['22','87','450','1000'];
   public lineChartData: ChartDataSets[] = [
-    { data: [25, 24, 26, 26, 27, 25, 26,24, 28, 28, 27, 26, 25, 26], label: '温度(℃)', yAxisID: 'y-axis-1' },
-    { data: [75, 74, 73, 77, 77, 77, 77,77, 77, 78, 75, 74, 72, 71], label: '湿度(%)', yAxisID: 'y-axis-0' },
-    { data: [470, 470, 480, 490, 482, 488, 480,480, 480, 480, 480, 480, 480, 480], label: '二氧化碳浓度(PPM)', yAxisID: 'y-axis-2' },
-    { data: [1000, 1000, 1000, 1000, 1000, 1000, 1000,1000, 996, 987, 950, 988, 1050, 1025], label: '光照强度(LX)', yAxisID: 'y-axis-3' }
+    { data: [0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0], label: '温度(℃)', yAxisID: 'y-axis-1' },
+    { data: [0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0], label: '湿度(%)', yAxisID: 'y-axis-0' },
+    { data: [0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0], label: '二氧化碳浓度(PPM)', yAxisID: 'y-axis-2' },
+    { data: [0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0], label: '光照强度(LX)', yAxisID: 'y-axis-3' }
   ];
-  public lineChartLabels: Label[] = ['13：00', '13：01', '13：02', '13：03', '13：04', '13：05', '13：06','13：00', '13：01', '13：02', '13：03', '13：04', '13：05', '13：06'];
+  public lineChartLabels: Label[] = ['', '', '', '', '', '', '','', '', '', '', '', '', ''];
   public lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
@@ -126,9 +128,11 @@ export class AirCollectPage implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  constructor(private bleservice:BleService,private screenOrientation: ScreenOrientation) { }
+  constructor(private activateedRoute:ActivatedRoute,private bleservice:BleService,private screenOrientation: ScreenOrientation) { }
 
   ngOnInit() {
+    this.passedId = this.activateedRoute.snapshot.paramMap.get('id');
+     // this.ble_connect();
     this.mockDataGet();
     this.screenOrientation.lock(`landscape`);
   }
@@ -160,7 +164,7 @@ export class AirCollectPage implements OnInit {
 
   private mockDataGet() {
     setInterval(() => {
-      this.bleservice.send_read_one_device_live(38).subscribe(
+      this.bleservice.send_read_one_device_live(parseInt(this.passedId.substring(3,5))).subscribe(
         next => {
           this.pushOne(next);
         },

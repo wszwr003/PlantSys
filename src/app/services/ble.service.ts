@@ -10,6 +10,7 @@ let receive_data_row:Uint8Array = new Uint8Array(30);
 let receive_data:string ='';
 let datas=[0,0,0,0];
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,6 +40,15 @@ export class BleService{
     let checked = this.add_check_sum(array);  
     let arraybuffer = checked.buffer as ArrayBuffer 
     this.ble_sendData(arraybuffer);  
+  }
+
+  send_read_all_device_addr(id:number):Observable<number[]>{
+    let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X02, 0X10, 0X05, 0xff, 0X55, 0X3C]);
+    array[10] = id;
+    let checked = this.add_check_sum(array);   
+    let arraybuffer = checked.buffer as ArrayBuffer
+    this.ble_sendData(arraybuffer); 
+    return of(datas);
   }
 
   add_check_sum(row_frame:Uint8Array){  //一个完整帧的check sum
@@ -86,12 +96,13 @@ export class BleService{
     var typedArray = new Uint8Array(buffer);
     var string = this.to16string(typedArray);
     if(typedArray[0]==0xAA&&typedArray[1]==0x7E&&typedArray[2]==0xC3){
-      if(receive_data_row[8]==0x10&&receive_data_row[9]==0x18&&receive_data_row[10]==0x33){
+      if(receive_data_row[8]==0x10&&receive_data_row[9]==0x18){
           datas[0] = ((receive_data_row[13]*256+receive_data_row[12])/10);
           datas[1] = ((receive_data_row[15]*256+receive_data_row[14])/10);
           datas[2] = receive_data_row[17]*256+receive_data_row[16];
           datas[3] = receive_data_row[19]*256+receive_data_row[18];
       }
+
       receive_data_row = typedArray;
       receive_data = string;
     }else{

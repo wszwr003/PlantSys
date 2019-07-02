@@ -39,7 +39,7 @@
 			<ion-row>
 				<ng-container *ngFor="let card of cards">   <!--TODO:注意ngFor和ngIf联合使用方法！！-->
 					<ion-col *ngIf="('所有节点'==selectedLoc)?(true):(selectedLoc==card.loc)" size-xs="6" size-sm="4" size-md="3" size-lg="2">
-						<ion-card color="light" [routerDirection]="'root'" [routerLink]="'/'+card.kind">
+						<ion-card color="light" (click)="deviceSelected(card)">
 							<ion-card-header>
 								<ion-chip color="success" style="position : absolute;top : 0rem;right : 0rem;">
 									<ion-label>{{card.loc}}</ion-label>

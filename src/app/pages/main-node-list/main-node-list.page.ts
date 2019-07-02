@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { AddNodePopoverComponent } from './add-node-popover.component';
 import { NODES , LOCATIONS } from '../../data/nodes-mock';
+import { NavController } from '@ionic/angular';
+
 @Component({
   selector: 'app-main-node-list',
   templateUrl: './main-node-list.page.html',
@@ -19,7 +21,7 @@ export class MainNodeListPage {
   node:any;
   public cards = NODES;
   public locs = LOCATIONS;
-  constructor(public popoverController: PopoverController) { 
+  constructor(private navCtrl:NavController,public popoverController: PopoverController) { 
     this.selectedLoc = "所有节点";
   }
 
@@ -44,5 +46,9 @@ export class MainNodeListPage {
   selectLoc(event:any){
     console.log(event);
     this.selectedLoc = event.target.text;
+  }
+
+  deviceSelected(card){
+    this.navCtrl.navigateForward(`/${card.kind}/${card.addr}`);
   }
 }

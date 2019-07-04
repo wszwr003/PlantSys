@@ -57,7 +57,7 @@ export class BluetoothListPage implements OnInit {
     this.ngZone.run(() => {
       this.statusMessage = message;
     });
-  } 
+  }
 
   deviceSelected(device){
     this.navCtrl.navigateForward(`ble-detail2/${device.id}/${device.name}`);

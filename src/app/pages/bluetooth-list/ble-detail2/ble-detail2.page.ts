@@ -117,7 +117,7 @@ export class BleDetail2Page implements OnInit {
     this.ble_sendData(checked); 
   }
 
-  send_write_one_device_auto(id:number,id_bind:number,relay:number){
+  send_write_one_device_auto(id:number,id_bind:number,relay:number){//最长5段时间
     let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X02, 0X28, 0X10, 0X0D, 
                                 0x00, 0x00, //控制节点
                                 0X00, //继电器序号01-0a
@@ -143,7 +143,7 @@ export class BleDetail2Page implements OnInit {
     this.ble_sendData(checked);  
   }
 
-  send_read_one_device_history(id:number,start:string,end:string){
+  send_read_one_device_history(id:number,start:string,end:string){ //最长24小时
 
     let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X0E, 0X10, 0x15, 0x00, 0x00, 0x14, 0x13, 0x06, 0x1B, 0x00, 0x14, 0x13, 0x06, 0x1B, 0x10, 0xff, 0X55, 0X3C]);
     array[10] = id;

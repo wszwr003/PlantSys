@@ -24,6 +24,7 @@ const routes: Routes = [
     ]
   },
   { path: 'air-contrl/:id', loadChildren: './pages/air-contrl/air-contrl.module#AirContrlPageModule' },
+  { path: 'auto-contrl', loadChildren: './pages/air-contrl/auto-contrl/auto-contrl.module#AutoContrlPageModule' },
   { path: 'air-collect/:id', loadChildren: './pages/air-collect/air-collect.module#AirCollectPageModule' },
   { path: 'water/:id', loadChildren: './pages/water/water.module#WaterPageModule' },
   { path: 'ble-detail/:id/:name',  loadChildren: './pages/bluetooth-list/ble-detail/ble-detail.module#BleDetailPageModule' },

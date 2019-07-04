@@ -42,13 +42,47 @@ export class BleService{
     this.ble_sendData(arraybuffer);  
   }
 
-  send_read_all_device_addr(id:number):Observable<number[]>{
+  send_read_all_device_addr(id:number):Observable<number[]>{  //not use
     let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X02, 0X10, 0X05, 0xff, 0X55, 0X3C]);
     array[10] = id;
     let checked = this.add_check_sum(array);   
     let arraybuffer = checked.buffer as ArrayBuffer
     this.ble_sendData(arraybuffer); 
     return of(datas);
+  }
+
+  send_read_one_device_auto(id:number){  
+      let count = 1; 
+      let interval = setInterval(()=>{
+        let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X01, 0X05, 0X10, 0X0E, 0x00, 0x00, 0X00, 0xff, 0X55, 0X3C]);
+        array[10] = id;
+        array[12] = count;
+        let checked = this.add_check_sum(array);  
+        let arraybuffer = checked.buffer as ArrayBuffer
+        this.ble_sendData(arraybuffer); 
+        if(count == 10)
+          clearInterval(interval);
+      },500);
+  }
+
+  send_write_one_device_auto(id:number,times:string[],id_bind:number,conditions:string[]){//最长5段时间
+    let array = new Uint8Array([0XAA, 0X7E, 0XC3, 0X10, 0X00, 0X00, 0X02, 0X28, 0X10, 0X0D, 
+                                0x00, 0x00, //控制节点
+                                0X00, //继电器序号01-0a
+                                0X02, //时间段数量00-ff  //max:05
+                                0X01, 0X00, 0X02, 0X00,//时间段
+                                0X03, 0X00, 0X04, 0X00,//时间段
+                                0X00, 0X00, //传感器绑定的节点
+                                0X11, 0X11, 0X01, 0X12, 0X88, 0X00,//传感器1
+                                0X22, 0X11, 0X01, 0X34, 0X88, 0X00,//传感器2
+                                0X33, 0X11, 0X01, 0X56, 0X88, 0X00,//传感器3
+                                0X44, 0X11, 0X01, 0X68, 0X88, 0X00,//传感器4
+                                0xff, //check_sum
+                                0X55, 0X3C]);
+
+    let checked = this.add_check_sum(array);  
+    let arraybuffer = checked.buffer as ArrayBuffer
+    this.ble_sendData(arraybuffer); 
   }
 
   add_check_sum(row_frame:Uint8Array){  //一个完整帧的check sum
